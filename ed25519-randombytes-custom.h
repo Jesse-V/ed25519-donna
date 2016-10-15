@@ -1,8 +1,8 @@
-/*
-	a custom randombytes must implement:
 
-	void ED25519_FN(ed25519_randombytes_unsafe) (void *p, size_t len);
+#include <botan/botan.h>
 
-	ed25519_randombytes_unsafe is used by the batch verification function
-	to create random scalars
-*/
+void ED25519_FN(ed25519_randombytes_unsafe)(void* p, size_t len)
+{
+  static Botan::AutoSeeded_RNG rng;
+  rng.randomize(static_cast<uint8_t*>(p), len);
+}
